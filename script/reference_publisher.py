@@ -229,11 +229,11 @@ def main():
         dynamic_obstacles_pub = rospy.Publisher('/dynamic_obstacles', DynamicObstacles, queue_size=1, latch=True)
         dynamic_obstacles_pub.publish(dynamic_obstacles)
 
-    if 'serialize' in sys.argv:
-        pickle_path = os.path.join(os.path.dirname(__file__), 'reference.pickle')
-        with open(pickle_path, 'w') as f:
-            pickle.dump({"center": center_line, "static": static_obstacles, "dynamic": dynamic_obstacles}, f)
-            print('pickle saved to %s' % pickle_path)
+#    if 'serialize' in sys.argv:
+#        pickle_path = os.path.join(os.path.dirname(__file__), 'reference.pickle')
+#        with open(pickle_path, 'w') as f:
+#            pickle.dump({"center": center_line, "static": static_obstacles, "dynamic": dynamic_obstacles}, f)
+#            print('pickle saved to %s' % pickle_path)
 
     if 'path' in sys.argv:
         ref_pub = rospy.Publisher('/center_line_path', Path, queue_size=1, latch=True)

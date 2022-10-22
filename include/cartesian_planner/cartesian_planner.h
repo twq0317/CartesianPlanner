@@ -16,25 +16,29 @@
 #include "dp_planner.h"
 #include "trajectory_optimizer.h"
 
-namespace cartesian_planner {
+namespace cartesian_planner
+{
 
-class CartesianPlanner {
-public:
-  struct StartState {
-    double x, y, theta, v, phi, a, omega;
+  class CartesianPlanner
+  {
+  public:
+    struct StartState
+    {
+      double x, y, theta, v, phi, a, omega;
+    };
+
+    explicit CartesianPlanner(const CartesianPlannerConfig &config, const Env &env)
+        : config_(config), dp_(config, env), opti_(config, env) {}
+
+    bool Plan(const StartState &state, DiscretizedTrajectory &result);
+
+  private:
+    void TrajectoryToFile(const DiscretizedTrajectory &trajectory, std::string);
+
+  private:
+    CartesianPlannerConfig config_;
+    DpPlanner dp_;
+    TrajectoryOptimizer opti_;
   };
-
-  explicit CartesianPlanner(const CartesianPlannerConfig &config, const Env &env)
-    : config_(config), dp_(config, env), opti_(config, env) {}
-
-  bool Plan(const StartState &state, DiscretizedTrajectory &result);
-
-
-private:
-  CartesianPlannerConfig config_;
-  DpPlanner dp_;
-  TrajectoryOptimizer opti_;
-
-};
 
 }
